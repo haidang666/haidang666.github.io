@@ -6,12 +6,22 @@
 	}
 </style>
 
-<h1 class="countdown" style="margin-top: 100px">haiyaku</h1>
 <h1 id="demo" class="countdown"></h1>
 
 <script>
-// Set the date we're counting down to
-var countDownDate = new Date("Jan 29, 2020 18:30:00").getTime();
+Date.prototype.addDays = function(days) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+function getCountDownDate() {
+  const date = new Date();
+  date.setHours(0,0,0,0);
+  return date.addDays(6 - date.getDay());
+}
+
+var countDownDate = getCountDownDate().getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -35,7 +45,7 @@ var x = setInterval(function() {
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
+    document.getElementById("demo").innerHTML = "It's saturday";
   }
 }, 1000);
 </script>
