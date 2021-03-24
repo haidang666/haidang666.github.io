@@ -1,51 +1,98 @@
-<!-- Display the countdown timer in an element -->
-<style type="text/css">
-	.countdown {
-		color: black;
-		text-align: center;
-	}
-</style>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body,
+      html {
+        height: 100%;
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgba(31, 41, 55, 1);
+      }
 
-<h1 id="demo" class="countdown"></h1>
+      p {
+        color: rgb(255, 255, 255);
+        margin-top: 0;
+        margin-bottom: 0;
+      }
 
-<script>
-Date.prototype.addDays = function(days) {
-    const date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        flex-wrap: wrap;
+      }
 
-function getCountDownDate() {
-  const date = new Date();
-  date.setHours(0,0,0,0);
-  return date.addDays(6 - date.getDay());
-}
+      .countdown {
+        text-align: center;
+        font-size: 2.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <p id="demo" class="countdown">hi</p>
+        <p id="wait-text" style="display: none;">until Saturday</p>
+      </div>
+    </div>
 
-var countDownDate = getCountDownDate().getTime();
+    <script>
+      Date.prototype.addDays = function (days) {
+        const date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
 
-// Update the count down every 1 second
-var x = setInterval(function() {
+      function getCountDownDate() {
+        const date = new Date();
+        date.setHours(0, 0, 0, 0);
+        return date.addDays(6 - date.getDay());
+      }
 
-  // Get today's date and time
-  var now = new Date().getTime();
+      var waitTextShow = false;
+      var countDownDate = getCountDownDate().getTime();
+      var today = new Date().getDay();
 
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
+      if (today === 0) {
+        document.getElementById("demo").innerHTML = "It's Sunday 🚀";
+      } else if (today === 6) {
+        document.getElementById("demo").innerHTML = "It's Saturday 🍻";
+      } else {
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+          // Get today's date and time
+          var now = new Date().getTime();
 
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
 
-  // Display the result in the element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "It's saturday";
-  }
-}, 1000);
-</script>
+          // Display the result in the element with id="demo"
+          document.getElementById("demo").innerHTML =
+            days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+          if (!waitTextShow) {
+            waitTextShow = true;
+            document.getElementById("wait-text").style.display = 'block';
+          }  
+
+          // If the count down is finished, write some text
+          if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "It's Saturday 🍻";
+            document.getElementById("wait-text").style.display = 'none';
+          }
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
