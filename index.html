@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>until Saturdat</title>
+    <title>until Friday night</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
     <style type="text/css">
@@ -35,7 +35,7 @@
     <div class="container">
       <div>
         <p id="demo" class="countdown">hi</p>
-        <p id="wait-text" style="display: none;">until Saturday</p>
+        <p id="wait-text" style="display: none;">until Friday night</p>
       </div>
     </div>
 
@@ -48,8 +48,8 @@
 
       function getCountDownDate() {
         const date = new Date();
-        date.setHours(0, 0, 0, 0);
-        return date.addDays(6 - date.getDay());
+        date.setHours(19, 0, 0, 0);
+        return date.addDays(5 - date.getDay());
       }
 
       var waitTextShow = false;
@@ -60,6 +60,8 @@
         document.getElementById("demo").innerHTML = "It's Sunday 🚀";
       } else if (today === 6) {
         document.getElementById("demo").innerHTML = "It's Saturday 🍻";
+      } else if (today === 5 && (new Date().getHours()) >= 19) {
+      	document.getElementById("demo").innerHTML = "It's Friday night 🍻";
       } else {
         // Update the count down every 1 second
         var x = setInterval(function () {
@@ -89,7 +91,7 @@
           // If the count down is finished, write some text
           if (distance < 0) {
             clearInterval(x);
-            document.getElementById("demo").innerHTML = "It's Saturday 🍻";
+            document.getElementById("demo").innerHTML = "It's Friday night 🍻";
             document.getElementById("wait-text").style.display = 'none';
           }
         }, 1000);
